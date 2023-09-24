@@ -1,0 +1,46 @@
+
+    <!DOCTYPE html>
+    <html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>数独游戏</title>
+        <link rel="stylesheet" type="text/css" href="select_difficulty.css">
+        <link rel="icon" href="/ico/小型猫窝.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/ico/小型猫窝.ico" type="image/x-icon">
+    </head>
+    <body>
+        <!-- 设置按钮 -->
+        <button id="settingsButton"></button>
+
+        <!-- 设置窗口 -->
+        <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <center><h2>游戏规则</h2></center>
+            <p>1.数独网格由 9x9 个空格组成。</p>
+            <p>2.您只能使用数字 1 到 9。</p>    
+            <p>3.每个 3×3 宫只能包含数字 1 到 9.</p>   
+            <p>4.每一列只能包含数字 1 到 9。</p>    
+            <p>5.每一行只能包含数字 1 到 9。</p>    
+            <p>6.每个 3×3 宫、每一列或每一行中的每个数字只能使用一次。</p>    
+            <p>7.当所有数独网格都填入正确的数字时，游戏结束。</p>  
+            <button id="closeSettings"></button>
+        </div>
+        </div>
+        <center><h1 id="title_1">数独游戏</h1></center>
+        <center><h2 id="title_2">选择难度</h2></center>
+        <div class="center-links">
+            <ul class="links-container_index">
+                <li><a class="link_index" href="simple_sudoku.html">简单</a></li>
+            </ul>
+            <ul class="links-container_index">
+                <li><a class="link_index" href="medium_sudoku.html">中等</a></li>
+            </ul>
+            <ul class="links-container_index">
+                <li><a class="link_index" href="hard_sudoku.html">困难</a></li>
+            </ul>
+        </div>
+        <script src="index.js"></script>
+    </body>
+    </html>
+    

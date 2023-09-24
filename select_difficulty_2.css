@@ -1,0 +1,108 @@
+/* select_difficulty.css */
+
+.links-container {
+    display: flex;
+    flex-wrap: wrap; /* 允许链接自动换行 */
+    justify-content: space-between; /* 在一行中均匀分布链接 */
+    list-style: none; /* 移除列表样式 */
+    padding: 0;
+    margin-bottom: 50px; /* 底边距用于分隔每一排链接 */
+}
+
+.links-container_index {
+    display: flex;
+    flex-wrap: wrap; /* 允许链接自动换行 */
+    justify-content: space-between; /* 在一行中均匀分布链接 */
+    list-style: none; /* 移除列表样式 */
+    padding: 0;
+    margin-bottom: 100px; /* 底边距用于分隔每一排链接 */
+}
+
+.link {
+    flex-basis: calc(33.33% - 20px); /* 在较大屏幕上，每行三个链接 */
+    text-align: center;
+    margin: 10px; /* 调整外边距 */
+    padding: 10px;
+    background-color: #0077FF;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.link_index{
+    text-align: center;
+    margin: 10px; /* 调整外边距 */
+    padding: 30px;
+    background-color: #0077FF;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+    width: 30%; /* 控制每个容器的宽度 */
+}
+
+.link:hover {
+    background-color: #0055CC; /* 鼠标悬停时的背景颜色 */
+}
+
+.center-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 设置容器高度为视口高度，确保容器充满整个屏幕 */
+}
+
+/* 设置响应式样式，以适应较小的屏幕 */
+@media (max-width: 768px) {
+    .link {
+        flex-basis: calc(50% - 20px); /* 在较小屏幕上，每行两个链接 */
+    }
+}
+
+
+
+body {
+    background-image: url('/图片/midium.png');
+    background-size: cover; /* 根据窗口大小自动调整背景图的大小 */
+    background-repeat: no-repeat; /* 防止背景图重复 */
+}
+
+/* 表格样式 */
+.sudoku-table {
+    width: 200px; /* 设置整个数独表格的宽度 */
+    height: 200px; /* 设置整个数独表格的高度 */
+    border-collapse: collapse; /* 合并边框 */
+    border: 2px solid rgb(215, 176, 176); /* 表格边框样式 */
+    position: relative; /* 使其成为相对定位的容器 */
+}
+
+/* 单元格样式 */
+.sudoku-table td {
+    width: 22px; /* 单元格宽度 */
+    height: 22px; /* 单元格高度 */
+    text-align: center; /* 文本居中对齐 */
+    border: 1px solid black; /* 单元格边框样式 */
+    font-size: 12px; /* 字体大小 */
+    border: 1px solid black; /* 单元格边框样式 */
+}
+.sudoku-container {
+    margin: 20px;
+}
+
+.sudoku-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /*padding: 0 30px; /* 调整元素之间的间距 */
+    flex-grow: 1; /* 让元素自适应宽度 */
+}
+
+#backButton {
+    width: 40px; /* 设置按钮宽度 */
+    height: 40px; /* 设置按钮高度 */
+    background-image: url('/图片/return.png'); /* 指定背景图像的URL */
+    background-size: cover; /* 使用 cover 来适应按钮的大小 */
+    border: none; /* 去掉按钮的边框 */
+    cursor: pointer; /* 设置光标为手型以指示按钮可点击 */
+    /* 如果需要添加其他样式，继续在这里添加 */
+}

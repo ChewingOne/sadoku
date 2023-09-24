@@ -1,0 +1,255 @@
+body {
+    /* 设置背景图片的URL */
+    background-image: url('/图片/midium.png'); /* 背景图片 */
+    
+    /* 设置背景图片的尺寸为覆盖整个视口 */
+    background-size: cover;
+    
+    /* 防止背景图片重复 */
+    background-repeat: no-repeat;
+    
+    /* 居中显示背景图片 */
+    background-position: center center;
+    
+    /* 设置背景颜色作为背景图片加载时的填充颜色 */
+    background-color: #f0f0f0; /* 可以根据需要更改颜色 */
+    
+    /* 如果你希望背景图片固定不动，可以添加下面这行 */
+    /* background-attachment: fixed; */
+}
+
+#sudoku-container {
+    /* 设置容器与页面四周的外边距为5px */
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+#sudoku-board {
+    /* 设置数独表格在背景中心 */
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding: 10px; /* 添加内边距 */
+    border: 2px solid #000; /* 表格边框样式 */
+    border-radius: 10px; /* 表格边框圆角 */
+    width: 100%; /* 设置表格宽度 */
+    max-width: 500px;
+    height: 100%; /* 设置表格高度，与宽度相等 */
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%; /* 根据需要调整宽度 */
+    max-width: 500px;
+    height: 100%;
+    max-height: 500px;
+}
+
+td {
+    width: 30px; /* 根据需要调整单元格宽度 */
+    height: 30px; /* 根据需要调整单元格高度 */
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #000000; /* 添加单元格边框 */
+}
+
+.number-button {
+    background-color: #0077FF;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#number-buttons {
+    /* 设置按键在数独表格下面 */
+    text-align: center;
+    margin-top: 20px; /* 调整按键与表格之间的间距 */
+}
+
+.number-button:hover {
+    background-color: #0055CC;
+}
+
+/* 在CSS中为非 "editable-cell" 类名的单元格添加背景颜色 */
+/* 即非可编辑的格子 */
+#sudoku-table td:not(.editable-cell) {
+    background-color: #ffffff; /* 这里可以设置你希望的背景颜色 */
+}
+
+/* 在CSS中为 class="editable-cell" 的单元格添加特定颜色的边框 */
+.editable-cell {
+    border: 2px solid rgb(228, 96, 115); /* 为 editable-cell 类名的单元格添加蓝色边框 */
+    background-color: #ffffff;
+}
+
+/* 设置导航栏样式 */
+nav {
+    background-color: #0077FF;
+    color: #FFFFFF;
+    padding: 10px;
+    text-align: center;
+}
+
+/* 移除列表样式 */
+ul.navigation {
+    list-style: none;
+    padding: 0;
+    display: flex; /* 使用 flex 布局 */
+    justify-content: space-between; /* 在一行中均匀分布导航项 */
+}
+
+/* 设置导航项样式 */
+li {
+    display: inline;
+}
+
+/* 设置导航链接样式 */
+a {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+/* 添加高亮样式 */
+.highlighted {
+    background-color: yellow; /* 设置背景颜色为黄色 */
+    /* 你可以根据需要自定义其他样式属性，比如颜色、边框等 */
+}
+
+/* 模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* 模态框按钮样式 */
+#resumeButton {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#resumeButton:hover {
+    background-color: #0056b3;
+}
+
+#pauseButton {
+    width: 30px; /* 设置按钮宽度 */
+    height: 30px; /* 设置按钮高度 */
+    background-image: url('/图片/begin.png'); /* 指定背景图像的URL */
+    background-size: cover; /* 使用 cover 来适应按钮的大小 */
+    border: none; /* 去掉按钮的边框 */
+    cursor: pointer; /* 设置光标为手型以指示按钮可点击 */
+    /* 如果需要添加其他样式，继续在这里添加 */
+}
+
+#resumeButton {
+    width: 40px; /* 设置按钮宽度 */
+    height: 40px; /* 设置按钮高度 */
+    background-image: url('/图片/stop.png'); /* 指定背景图像的URL */
+    background-size: cover; /* 使用 cover 来适应按钮的大小 */
+    border: none; /* 去掉按钮的边框 */
+    cursor: pointer; /* 设置光标为手型以指示按钮可点击 */
+/* 如果需要添加其他样式，继续在这里添加 */
+}
+
+#backButton {
+    width: 40px; /* 设置按钮宽度 */
+    height: 40px; /* 设置按钮高度 */
+    background-image: url('/图片/home.png'); /* 指定背景图像的URL */
+    background-size: cover; /* 使用 cover 来适应按钮的大小 */
+    border: none; /* 去掉按钮的边框 */
+    cursor: pointer; /* 设置光标为手型以指示按钮可点击 */
+    /* 如果需要添加其他样式，继续在这里添加 */
+}
+
+#erase {
+    width: 50px; /* 设置按钮宽度 */
+    height: 50px; /* 设置按钮高度 */
+    background-image: url('/图片/erase.png'); /* 指定背景图像的URL */
+    background-size: cover; /* 使用 cover 来适应按钮的大小 */
+    border: none; /* 去掉按钮的边框 */
+    cursor: pointer; /* 设置光标为手型以指示按钮可点击 */
+    /* 如果需要添加其他样式，继续在这里添加 */
+}
+
+#timer-container {
+    display: flex; /* 使用 flex 布局 弹性布局，使得内部元素可以同一行水平排列 */
+    align-items: center; /* 垂直居中 */
+    justify-content: flex-end; /* 将内容推向右侧 */
+    /*position: fixed; /* 使用固定定位，相对于视口居中 */
+    top: 50%; /* 垂直居中 */
+    transform: translateX(170px); /* 水平偏移50%屏幕宽度的位置 */
+    z-index: 999; /* 可能需要调整 z-index 值以确保在其他元素之上显示 */
+}
+
+#timer {
+    margin-right: 10px; /* 为了在计时器和按钮之间添加一些间距 */
+    font-family: Arial, sans-serif; /* 设置字体 */
+    font-size: 24px; /* 设置字体大小 */
+    font-weight: bold; /* 设置字体粗细（可选）*/
+    color: #000000; /* 设置字体颜色 */
+}
+
+#timepiece {
+    margin-right: 10px;
+    width: 30px; /* 设置按钮宽度 */
+    height: 30px; /* 设置按钮高度 */
+    background-image: url('/图片/time.png'); /* 指定背景图像的URL */
+    background-size: cover; /* 使用 cover 来适应按钮的大小 */
+    border: none; /* 去掉按钮的边框 */
+    /*cursor: pointer; /* 设置光标为手型以指示按钮可点击 */
+    /* 如果需要添加其他样式，继续在这里添加 */
+}
+
+#settingsButton {/*设置窗口*/
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+
+#settingsButton {
+    margin-right: 10px;
+    width: 30px; /* 设置按钮宽度 */
+    height: 30px; /* 设置按钮高度 */
+    background-image: url('/图片/设置.png'); /* 指定背景图像的URL */
+    background-size: cover; /* 使用 cover 来适应按钮的大小 */
+    border: none; /* 去掉按钮的边框 */
+    cursor: pointer; /* 设置光标为手型以指示按钮可点击 */
+    /* 如果需要添加其他样式，继续在这里添加 */
+}

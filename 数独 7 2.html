@@ -1,0 +1,97 @@
+<!-- sample_sudoku.html -->
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数独游戏 - 中等难度</title>
+    <link rel="stylesheet" href="styles_2.css">
+    <link rel="icon" href="/ico/B站狗头.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/ico/B站狗头.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- 设置按钮 -->
+    <button id="settingsButton"></button>
+
+    <!-- 设置窗口 -->
+    <div id="settingsModal" class="modal">
+    <div class="modal-content">
+        <h2>音效设置</h2>
+        <label for="volumeSlider">音效音量：</label>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+
+        <button id="closeSettings">关闭</button>
+    </div>
+    </div>
+    <button id="backButton", data-target="index.html"></button>
+    <audio id="eraseSound" src="音效/橡皮.mp3"></audio>
+    <audio id="wrSound" src="音效/铅笔2.mp3"></audio>
+    <nav>
+        <ul class="navigation">
+            <li><a href="数独 1 2.html">数独 1</a></li>
+            <li><a href="数独 2 2.html">数独 2</a></li>
+            <li><a href="数独 3 2.html">数独 3</a></li>
+            <li><a href="数独 4 2.html">数独 4</a></li>
+            <li><a href="数独 5 2.html">数独 5</a></li>
+            <li><a href="数独 6 2.html">数独 6</a></li>
+            <li><a href="数独 7 2.html">数独 7</a></li>
+            <li><a href="数独 8 2.html">数独 8</a></li>
+            <li><a href="数独 9 2.html">数独 9</a></li>
+        </ul>
+    </nav>
+    <script>
+        // 获取返回按钮元素
+        const backButton = document.getElementById('backButton');
+
+        // 添加点击事件处理程序
+    backButton.addEventListener('click', function () {
+        // 获取要跳转到的页面URL
+        const targetUrl = backButton.getAttribute('data-target');
+
+        // 跳转到指定页面
+        window.location.href = targetUrl;
+    });
+    </script>  
+        <center><h1>中等难度 数独 7</h1></center>
+        <div id="sudoku-container">
+            <div id="timer-container">
+                <div id="timepiece"></div>
+                <!-- 在页面中显示计时 -->
+                <div id="timer">00:00:00</div>
+
+                <!-- 添加暂停按钮 -->
+                <button id="pauseButton"></button>
+                <!-- 模态框 -->
+            </div>
+            <div id="modal" class="modal">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <h2>计时已暂停</h2>
+                    <p>点击下面的按钮继续</p>
+                    <button id="resumeButton"></button>
+                </div>
+                </div>
+            </div>
+            <div id="sudoku-board">
+                <table id="sudoku-table">
+                    <!-- This is where the Sudoku game will be displayed -->
+                </table>
+            </div>
+
+            <div id="number-buttons">
+                <button class="number-button" data-value="1">1</button>
+                <button class="number-button" data-value="2">2</button>
+                <button class="number-button" data-value="3">3</button>
+                <button class="number-button" data-value="4">4</button>
+                <button class="number-button" data-value="5">5</button>
+                <button class="number-button" data-value="6">6</button>
+                <button class="number-button" data-value="7">7</button>
+                <button class="number-button" data-value="8">8</button>
+                <button class="number-button" data-value="9">9</button>
+                <button id="erase" class="number-button" data-value=''></button>
+            </div>
+        </div>
+    <script src="sudoku_data_40_7.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+// sudoku_data_1.js
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('sudoku_data_50_4.json')
+        .then(response => response.json())
+        .then(data => {
+            const sudokuTable = document.getElementById('sudoku-table');
+            // 渲染数独游戏数据到HTML表格
+            for (let i = 0; i < data.puzzle.length; i++) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < data.puzzle[i].length; j++) {
+                    const cell = document.createElement('td');
+                    if (data.puzzle[i][j]!=0)
+                        cell.textContent = data.puzzle[i][j];
+                    else{
+                        cell.className = 'editable-cell';
+                        cell.textContent = '';
+                    }
+                    row.appendChild(cell);
+                }
+                sudokuTable.appendChild(row);
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+});
+
+// 获取所有数字按钮
+const numberButtons = document.querySelectorAll('.number-button');
+
+// 为每个按钮添加点击事件监听器
+numberButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        // 获取按钮上的值
+        const buttonValue = this.getAttribute('data-value');
+
+        // 获取当前选中的单元格
+        const selectedCell = document.querySelector('.selected-cell');
+
+        // 如果有选中的单元格，将按钮的值设置为单元格的文本内容
+        if (selectedCell) {
+            selectedCell.textContent = buttonValue;
+            wrSound.currentTime = 0; // 从头开始播放
+            wrSound.play();
+        }
+    });
+});
+
+// 添加一个点击事件监听器，以便在单击带有特殊标记的单元格时进行编辑
+const sudokuTable = document.getElementById('sudoku-table');
+sudokuTable.addEventListener('click', function (event) {
+    // 检查当前点击的单元格是否有特殊标记
+    if (event.target.tagName === 'TD' && event.target.classList.contains('editable-cell')) {
+        const selectedCell = document.querySelector('.selected-cell');
+
+        // 移除之前的选中状态
+        if (selectedCell) {
+            selectedCell.classList.remove('selected-cell');
+        }
+
+        // 添加选中状态到当前点击的单元格
+        event.target.classList.add('selected-cell');
+        // 检查当前点击的单元格是否已经高亮
+        const isHighlighted = event.target.classList.contains('highlighted');
+
+        // 移除所有高亮状态
+        const highlightedCells = document.querySelectorAll('.highlighted');
+        highlightedCells.forEach(cell => cell.classList.remove('highlighted'));
+
+        // 如果当前点击的单元格不是之前高亮的单元格，就高亮它
+        if (!isHighlighted) {
+            event.target.classList.add('highlighted');
+        }
+    }
+});
+
+// 获取计时显示元素和暂停按钮
+const timerElement = document.getElementById('timer');
+const pauseButton = document.getElementById('pauseButton');
+const resumeButton = document.getElementById('resumeButton');
+//设置窗口
+const settingsButton = document.getElementById('settingsButton');
+const settingsModal = document.getElementById('settingsModal');
+const closeSettingsButton = document.getElementById('closeSettings');
+
+let startTime; // 用于存储计时开始时间的变量
+let timerInterval; // 用于存储计时器的变量
+let isTimerPaused = false; // 用于存储计时器的暂停状态
+
+// 更新计时显示
+function updateTimer() {
+  const currentTime = new Date().getTime();
+  const elapsedTime = new Date(currentTime - startTime);
+  const hours = String(elapsedTime.getUTCHours()).padStart(2, '0');
+  const minutes = String(elapsedTime.getUTCMinutes()).padStart(2, '0');
+  const seconds = String(elapsedTime.getUTCSeconds()).padStart(2, '0');
+  timerElement.textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+let elapsedTime = 0; // 用于存储已经过去的时间的变量
+
+function startTimer() {
+    if (!isTimerPaused) {
+      startTime = new Date().getTime() - elapsedTime; // 加回已经过去的时间
+      timerInterval = setInterval(updateTimer, 1000); // 每秒更新一次计时显示
+      isTimerPaused = false; // 标记计时器已启动
+    }
+  }
+  
+
+
+// 暂停计时
+function pauseTimer() {
+    clearInterval(timerInterval); // 停止计时器
+    elapsedTime = new Date().getTime() - startTime - 1; // 计算已经过去的时间
+    isTimerPaused = true; // 标记计时器已暂停
+}
+  
+
+// 给暂停按钮添加点击事件监听器
+pauseButton.addEventListener('click', function () {
+  pauseTimer();
+  modal.style.display = 'block'; // 显示模态框
+  settingsButton.disabled = true;
+});
+
+// 给继续按钮添加点击事件监听器
+resumeButton.addEventListener('click', function () {
+  modal.style.display = 'none'; // 隐藏模态框
+  isTimerPaused = false; // 设置计时器继续状态
+  startTimer(); // 继续计时器
+  settingsButton.disabled = false;
+});
+
+// 页面加载时开始计时
+document.addEventListener('DOMContentLoaded', startTimer);
+
+// 获取所有具有 id="write" 的按钮
+const wrButtons = document.querySelectorAll('#write');
+
+// 获取音频元素
+const wrSound = document.getElementById('wrSound');
+
+// 遍历按钮并为每个按钮添加点击事件监听器
+wrButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        // 在这里添加播放音效的代码
+        wrSound.play(); // 调用播放音效的函数
+    });
+});
+
+// 获取按钮元素
+const eraseButton = document.getElementById('erase');
+
+// 获取音频元素
+const eraseSound = document.getElementById('eraseSound');
+
+// 为按钮添加点击事件监听器
+eraseButton.addEventListener('click', function () {
+    // 播放音效
+    eraseSound.play();
+});
+
+
+const volumeSlider = document.getElementById('volumeSlider');
+volumeSlider.addEventListener('input', function () {
+    const volume = parseFloat(volumeSlider.value);
+    wrSound.volume = volume;
+    eraseSound.volume = volume;
+});
+
+
+
+settingsButton.addEventListener('click', function () {
+    settingsModal.style.display = 'block';
+    pauseTimer();
+    // 点击设置按钮后禁用暂停按钮
+    pauseButton.disabled = true;
+});
+
+
+closeSettingsButton.addEventListener('click', function () {
+    settingsModal.style.display = 'none';
+    isTimerPaused = false; // 设置计时器继续状态
+    startTimer(); // 继续计时器
+    // 点击设置按钮后禁用暂停按钮
+    pauseButton.disabled = false;
+});

@@ -1,4 +1,13 @@
-// sudoku_data_1.js
+let fullData; // 存储完整的数独数据
+
+// 获取完整数独数据
+fetch('sudoku_data_full_40_6.json')
+    .then(response => response.json())
+    .then(data => {
+        fullData = data;
+    })
+    .catch(error => console.error('Error fetching data:', error));
+
 document.addEventListener('DOMContentLoaded', function () {
     fetch('sudoku_data_40_6.json')
         .then(response => response.json())
@@ -9,12 +18,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 const row = document.createElement('tr');
                 for (let j = 0; j < data.puzzle[i].length; j++) {
                     const cell = document.createElement('td');
-                    if (data.puzzle[i][j]!=0)
+                    if (data.puzzle[i][j] != 0) {
                         cell.textContent = data.puzzle[i][j];
-                    else{
+                    } else {
                         cell.className = 'editable-cell';
                         cell.textContent = '';
                     }
+
+                    // 添加右键点击事件监听器
+                    cell.addEventListener('contextmenu', function (e) {
+                        e.preventDefault(); // 阻止默认的右键菜单
+                        // 在此处将sudoku_data_full_30_1.json中对应位置的数字渲染到格子中
+                        const number = fullData.puzzle[i][j];
+                        if (number != 0) {
+                            cell.textContent = number;
+                        }
+                        // 检查当前格子是否已经高亮
+                        const isHighlighted = cell.classList.contains('highlighted');
+
+                        // 移除所有高亮状态
+                        const highlightedCells = document.querySelectorAll('.highlighted');
+                        highlightedCells.forEach(highlightedCell => highlightedCell.classList.remove('highlighted'));
+
+                        // 如果当前格子不是之前高亮的格子，就高亮它
+                        if (!isHighlighted) {
+                            cell.classList.add('highlighted');
+
+                        }
+                    });
+
                     row.appendChild(cell);
                 }
                 sudokuTable.appendChild(row);
@@ -22,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error fetching data:', error));
 });
+
 
 // 获取所有数字按钮
 const numberButtons = document.querySelectorAll('.number-button');

@@ -16,7 +16,15 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 def generate_sudoku():
     # 生成一个空的数独游戏板
     board = [[0] * 9 for _ in range(9)]
+
+    # 随机填充第一行
+    nums = random.sample(range(1, 10), 9)
+    for i in range(9):
+        board[0][i] = nums[i]
+
+    # 生成完整的数独解
     solve_sudoku(board)
+
     return board
 
 def is_valid(board, row, col, num):
@@ -50,9 +58,15 @@ def solve_sudoku(board):
                 return False
     return True
 
+
 def create_sudoku_data(index,difficulty):
     
     sudoku_board = generate_sudoku()
+
+    # 保存完整的数独数据到 JSON 文件（例如，sudoku_data_full_30.json）
+    with open(f"sudoku_data_full_{difficulty}_{index}.json", "w") as f:
+        json.dump({"puzzle": sudoku_board}, f)
+
     # 根据难度参数确定挖去的空格数量
     if difficulty == 30:
         num_to_remove = 30
@@ -60,13 +74,15 @@ def create_sudoku_data(index,difficulty):
         num_to_remove = 40
     elif difficulty == 50:
         num_to_remove = 50
+    removed_positions = []  # 用于存储挖空的位置，后续可用于显示答案
     for _ in range(num_to_remove):
         row, col = random.randint(0, 8), random.randint(0, 8)
-        while sudoku_board[row][col] == 0:
+        while sudoku_board[row][col] == 0 or (row, col) in removed_positions:
             row, col = random.randint(0, 8), random.randint(0, 8)
+        removed_positions.append((row, col))
         sudoku_board[row][col] = 0
 
-    return {"puzzle": sudoku_board}
+    return {"puzzle": sudoku_board, "removed_positions": removed_positions}
 
 def write_sudoku_data_to_json(difficulty):
     all_sudoku_data = []

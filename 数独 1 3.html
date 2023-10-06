@@ -24,6 +24,13 @@
         <button id="closeSettings">关闭</button>
     </div>
     </div>
+    <!-- 模态框 -->
+    <div id="sudokuModal" class="modal">
+        <div class="modal-content">
+        <h2>Sudoku Data</h2>
+        <div id="sudokuTable"></div>
+        </div>
+    </div>
     <button id="backButton", data-target="index.html"></button>
     <audio id="eraseSound" src="音效/橡皮.mp3"></audio>
     <audio id="wrSound" src="音效/铅笔2.mp3"></audio>
@@ -90,6 +97,7 @@
                 <button class="number-button" data-value="8">8</button>
                 <button class="number-button" data-value="9">9</button>
                 <button id="erase" class="number-button" data-value=''></button>
+                <button id="searchanswerButton" >查看答案</button>
             </div>
         </div>
     <script src="sudoku_data_50_1.js"></script>

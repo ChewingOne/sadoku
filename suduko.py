@@ -3,6 +3,9 @@ import json
 import random
 import webbrowser
 from multiprocessing import Pool
+import time
+import multiprocessing
+
 
 
 # 自定义处理程序类，继承自http.server.SimpleHTTPRequestHandler
@@ -111,7 +114,54 @@ def write_sudoku_data_to_json(difficulty):
     # def open_index_html():
     # 打开同一目录下的index.html文件
 
+def solve_sudoku_1(board):
+    empty_cell = find_empty_cell(board)
 
+    if not empty_cell:
+        return True
+
+    row, col = empty_cell
+
+    for num in range(1, 10):
+        if is_valid_move(board, row, col, num):
+            board[row][col] = num
+
+            if solve_sudoku_1(board):
+                return True
+
+            board[row][col] = 0
+
+    return False
+
+def find_empty_cell(board):
+    for row in range(9):
+        for col in range(9):
+            if board[row][col] == 0:
+                return row, col
+    return None
+
+def is_valid_move(board, row, col, num):
+    return (
+        num not in board[row] and
+        num not in [board[i][col] for i in range(9)] and
+        num not in [board[i][j] for i in range(row - row % 3, row - row % 3 + 3) for j in range(col - col % 3, col - col % 3 + 3)]
+    )
+
+
+def solution(index, difficulty):
+    # 读取数独数据
+    with open(f"sudoku_data_{difficulty}_{index}.json", "r") as f:
+        data = json.load(f)
+        sudoku_board = data["puzzle"]
+
+    s_time = time.perf_counter()
+    solve_sudoku_1(sudoku_board)
+    e_time = time.perf_counter()
+    n_time = e_time - s_time
+
+    # 保存解答后的数独数据到 JSON 文件
+    with open(f"sudoku_data_solved_{difficulty}_{index}.json", "w") as f:
+        json.dump({"solution": sudoku_board}, f)
 #    webbrowser.open("file://" + os.path.abspath("index.html"))
 
 if __name__ == "__main__":
@@ -119,6 +169,18 @@ if __name__ == "__main__":
     write_sudoku_data_to_json(30)  # 生成简单难度的数据
     write_sudoku_data_to_json(40)  # 生成中等难度的数据
     write_sudoku_data_to_json(50)  # 生成困难难度的数据
+
+    # 创建队列
+    q = multiprocessing.Manager().Queue()
+
+    # 创建进程池
+    p = multiprocessing.Pool()
+
+    difficulties = [30, 40, 50]  # 不同的难度
+    for difficulty in difficulties:
+        for i in range(1, 10):
+            p.apply(func=solution, args=(i, difficulty))
+
 
     # 启动本地服务器，监听端口
     server_address = ('', 8000)  # 可以根据需要选择任何可用的端口

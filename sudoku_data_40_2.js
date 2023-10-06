@@ -217,3 +217,47 @@ closeSettingsButton.addEventListener('click', function () {
     // 点击设置按钮后禁用暂停按钮
     pauseButton.disabled = false;
 });
+
+// 打开模态框的函数
+function openModal() {
+    var modal = document.getElementById('sudokuModal');
+    modal.style.display = 'block';
+
+    // 读取JSON文件并生成表格
+    fetch('sudoku_data_solved_40_2.json')
+        .then(response => response.json())
+        .then(data => {
+            if (data.solution && Array.isArray(data.solution) && data.solution.length === 9) {
+                var tableHtml = '<table>';
+                for (var i = 0; i < data.solution.length; i++) {
+                    tableHtml += '<tr>';
+                    for (var j = 0; j < data.solution[i].length; j++) {
+                        tableHtml += '<td>' + data.solution[i][j] + '</td>';
+                    }
+                    tableHtml += '</tr>';
+                }
+                tableHtml += '</table>';
+                console.log(tableHtml);
+                // 将表格添加到模态框中
+                var sudokuTable = document.getElementById('sudokuTable');
+                sudokuTable.innerHTML = tableHtml;
+            } else {
+                console.error('Invalid data format: Missing or invalid "solution" property.');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading Sudoku data: ' + error);
+        });
+}
+
+// 当用户点击模态框之外的区域时关闭模态框
+window.onclick = function (event) {
+    var modal = document.getElementById('sudokuModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// 监听按钮点击事件
+var showAnswerBtn = document.getElementById('searchanswerButton');
+showAnswerBtn.addEventListener('click', openModal);

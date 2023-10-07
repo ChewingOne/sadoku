@@ -4,7 +4,8 @@ import random
 import webbrowser
 from multiprocessing import Pool
 import time
-import multiprocessing
+import threading
+from queue import Queue
 
 
 
@@ -153,16 +154,30 @@ def solution(index, difficulty):
     with open(f"sudoku_data_{difficulty}_{index}.json", "r") as f:
         data = json.load(f)
         sudoku_board = data["puzzle"]
-
-    s_time = time.perf_counter()
     solve_sudoku_1(sudoku_board)
-    e_time = time.perf_counter()
-    n_time = e_time - s_time
+    
 
     # 保存解答后的数独数据到 JSON 文件
     with open(f"sudoku_data_solved_{difficulty}_{index}.json", "w") as f:
         json.dump({"solution": sudoku_board}, f)
 #    webbrowser.open("file://" + os.path.abspath("index.html"))
+
+def multithreading():
+    # 创建队列
+    q = Queue()
+    # 线程列表
+    threads = []
+    difficulties = [30,40,50]
+    for difficulty in difficulties:
+        for i in range(1,10):
+            t = threading.Thread(target=solution, args=(i, difficulty))
+            t.start()
+            threads.append(t)
+
+    # 对所有线程进行阻塞
+    for thread in threads:
+        thread.join()
+    results = []
 
 if __name__ == "__main__":
     # 调用不同难度的数独游戏生成函数
@@ -170,17 +185,7 @@ if __name__ == "__main__":
     write_sudoku_data_to_json(40)  # 生成中等难度的数据
     write_sudoku_data_to_json(50)  # 生成困难难度的数据
 
-    # 创建队列
-    q = multiprocessing.Manager().Queue()
-
-    # 创建进程池
-    p = multiprocessing.Pool()
-
-    difficulties = [30, 40, 50]  # 不同的难度
-    for difficulty in difficulties:
-        for i in range(1, 10):
-            p.apply(func=solution, args=(i, difficulty))
-
+    multithreading()
 
     # 启动本地服务器，监听端口
     server_address = ('', 8000)  # 可以根据需要选择任何可用的端口

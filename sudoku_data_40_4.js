@@ -62,7 +62,7 @@ const numberButtons = document.querySelectorAll('.number-button');
 // 为每个按钮添加点击事件监听器
 numberButtons.forEach(button => {
     button.addEventListener('click', function () {
-        // 获取按钮上的值
+        // 获取按钮的值
         const buttonValue = this.getAttribute('data-value');
 
         // 获取当前选中的单元格
@@ -71,9 +71,74 @@ numberButtons.forEach(button => {
         // 如果有选中的单元格，将按钮的值设置为单元格的文本内容
         if (selectedCell) {
             selectedCell.textContent = buttonValue;
+            wrSound.currentTime = 0; // 播放音效
+            wrSound.play();
+
+            // 检查同一行和同一列是否有相同数字
+            const rowIndex = selectedCell.parentElement.rowIndex;
+            const colIndex = selectedCell.cellIndex;
+            const table = selectedCell.parentElement.parentElement;
+
+            // 获取当前单元格的值
+            const cellValue = selectedCell.textContent;
+
+            // console.log(cellValue)
+
+            // 检查同一行是否有相同数字
+            const row = table.rows[rowIndex];
+            for (let i = 0; i < row.cells.length; i++) {
+                if (i !== colIndex && row.cells[i].textContent === cellValue && cellValue!=='') {
+                    // 发现相同数字，高亮单元格并显示错误提示
+                    selectedCell.classList.remove('highlighted');
+                    selectedCell.classList.add('error-highlight');
+                    showError("注意！对应行列该数字只能出现一次哟😁");
+                    return; // 停止检查，以免重复高亮
+                }else{
+                        clearError()
+                        selectedCell.classList.remove('error-highlight');
+                        selectedCell.classList.add('highlighted');
+                }
+            }
+
+            // 检查同一列是否有相同数字
+            for (let i = 0; i < table.rows.length; i++) {
+                if (i !== rowIndex && table.rows[i].cells[colIndex].textContent === cellValue && cellValue!=='') {
+                    // 发现相同数字，高亮单元格并显示错误提示
+                    // 当出现错误时的高亮
+                    selectedCell.classList.remove('highlighted');
+                    selectedCell.classList.add('error-highlight');
+                    showError("注意！对应行列该数字只能出现一次哟😁");
+                    return; // 停止检查，以免重复高亮
+                }else{
+                        clearError()
+                        selectedCell.classList.remove('error-highlight');
+                        selectedCell.classList.add('highlighted');
+                }
+            }
         }
     });
 });
+
+// 清除错误样式和错误提示
+function clearError() {
+    const cellsWithErrors = document.querySelectorAll('.error');
+    cellsWithErrors.forEach(cell => cell.classList.remove('error'));
+    hideError();
+}
+
+// 显示错误提示
+function showError(errorMessage) {
+    const errorElement = document.getElementById('error-message');
+    errorElement.textContent = errorMessage;
+    errorElement.style.display = 'block';
+}
+
+// 隐藏错误提示
+function hideError() {
+    const errorElement = document.getElementById('error-message');
+    errorElement.style.display = 'none';
+}
+
 
 // 添加一个点击事件监听器，以便在单击带有特殊标记的单元格时进行编辑
 const sudokuTable = document.getElementById('sudoku-table');

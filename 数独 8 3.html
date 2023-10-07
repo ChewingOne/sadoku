@@ -31,6 +31,7 @@
         <div id="sudokuTable"></div>
         </div>
     </div>
+    <button id="searchanswerButton" ></button>
     <button id="backButton", data-target="index.html"></button>
     <audio id="eraseSound" src="音效/橡皮.mp3"></audio>
     <audio id="wrSound" src="音效/铅笔2.mp3"></audio>
@@ -85,7 +86,7 @@
                     <!-- This is where the Sudoku game will be displayed -->
                 </table>
             </div>
-
+            <div id="error-message" class="error-message"></div>
             <div id="number-buttons">
                 <button class="number-button" data-value="1">1</button>
                 <button class="number-button" data-value="2">2</button>
@@ -97,7 +98,7 @@
                 <button class="number-button" data-value="8">8</button>
                 <button class="number-button" data-value="9">9</button>
                 <button id="erase" class="number-button" data-value=''></button>
-                <button id="searchanswerButton" >查看答案</button>
+                <!-- <button id="searchanswerButton" >查看答案</button> -->
             </div>
         </div>
     <script src="sudoku_data_50_8.js"></script>

@@ -129,6 +129,11 @@ a:hover {
     /* 你可以根据需要自定义其他样式属性，比如颜色、边框等 */
 }
 
+/* 错误时的高亮状态 */
+.error-highlight {
+    background-color: red;
+}
+
 /* 模态框样式 */
 .modal {
     display: none;
@@ -236,17 +241,13 @@ a:hover {
     /* 如果需要添加其他样式，继续在这里添加 */
 }
 
-#settingsButton {/*设置窗口*/
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-}
+
 
 #settingsButton {
-    margin-right: 10px;
-    width: 30px; /* 设置按钮宽度 */
-    height: 30px; /* 设置按钮高度 */
+    position: relative;
+    float: right;
+    width: 40px; /* 设置按钮宽度 */
+    height: 40px; /* 设置按钮高度 */
     background-image: url('/图片/设置.png'); /* 指定背景图像的URL */
     background-size: cover; /* 使用 cover 来适应按钮的大小 */
     border: none; /* 去掉按钮的边框 */
@@ -256,4 +257,26 @@ a:hover {
 
 #sudokuModal {
     z-index: 1999;
+}
+
+#searchanswerButton{
+    float: right;
+    width: 40px; 
+    height: 40px;
+    background-image: url('/图片/查看答案.png');
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+}
+@font-face {
+    font-family: 'Alibaba Sans Chinese';
+    src: url('AlimamaShuHeiTi-Bold.otf') format('woff2'),
+    /* 可以添加更多字体格式，以提高兼容性 */
+}
+
+#error-message{
+    font-family: Alibaba Sans Chinese; 
+    font-size: 30px; 
+    font-weight: bold; 
+    color: #ff0000; 
 }

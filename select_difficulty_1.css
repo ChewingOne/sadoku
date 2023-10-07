@@ -106,6 +106,13 @@ body {
     cursor: pointer; /* 设置光标为手型以指示按钮可点击 */
     /* 如果需要添加其他样式，继续在这里添加 */
 }
-#sudokuModal {
-    z-index: 1999;
+
+#searchanswerButton{
+    float: right;
+    width: 40px; 
+    height: 40px;
+    background-image: url('/图片/查看答案.png');
+    background-size: cover;
+    border: none;
+    cursor: pointer;
 }

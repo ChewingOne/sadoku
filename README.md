@@ -14,6 +14,6 @@
 
 注：
 
-- 详细介绍请看[csdn]()
+- 详细介绍请看[csdn](https://bbs.csdn.net/topics/617373931)
 - 所有的json文件均由运行sudoku.py文件自动生成
 - .otf文件是下载的字体
